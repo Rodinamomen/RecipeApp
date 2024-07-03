@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-     <string name="welcome">Welcome to Food</string>
+    <string name="welcome">Welcome to Food</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in_to_continue">Sign in to continue</string>
     <string name="your_email">Your email</string>

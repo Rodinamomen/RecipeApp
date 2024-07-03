@@ -47,5 +47,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //splash screen Api
     implementation(libs.androidx.core.splashscreen)
+    // navigation
+    val nav_version = "2.7.5"
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
 }

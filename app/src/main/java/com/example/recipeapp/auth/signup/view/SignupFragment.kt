@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.recipeapp.R
-import com.example.recipeapp.auth.signup.model.User
 import com.example.recipeapp.auth.signup.viewmodel.SignupViewModel
+import com.example.recipeapp.database.User
 import com.example.recipeapp.databinding.FragmentSignupBinding
 import com.google.android.material.textfield.TextInputLayout
 

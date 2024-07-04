@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recipeapp.auth.signup.model.User
+import com.example.recipeapp.database.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class SignupViewModel(val context: Context) :ViewModel() {
     private var firebaseDatabase= Firebase.firestore
      fun addUser(user: User){
         viewModelScope.launch(Dispatchers.IO) {
-            auth.createUserWithEmailAndPassword(user.email, user.password).addOnCompleteListener {
+            auth.createUserWithEmailAndPassword(user.userEmail, user.password).addOnCompleteListener {
                     task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
@@ -38,6 +38,7 @@ class SignupViewModel(val context: Context) :ViewModel() {
                         ))
                         .addOnSuccessListener {
                             _userAdded.value= true
+
                         }
                         .addOnFailureListener {
                             _userAdded.value= false

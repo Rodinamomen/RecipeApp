@@ -65,7 +65,6 @@ class SignupViewModel(val signupRepo: SignupRepo) :ViewModel() {
                 var flag = true
                 for (document in result) {
                    flag = (email==document.get("userEmail"))
-                    Log.d("flag", "isEmailExists:$flag ")
                 }
                 _emailExists.value=flag
             }

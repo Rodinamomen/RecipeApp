@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recipeapp.R
+import com.example.recipeapp.R.layout.fragment_home
 import com.example.recipeapp.auth.signup.repo.SignupRepo
 import com.example.recipeapp.auth.signup.repo.SignupRepoImp
 import com.example.recipeapp.auth.signup.viewmodel.SignupViewModel
@@ -24,11 +25,20 @@ import com.example.recipeapp.home.viewmodel.HomeViewModel
 import com.example.recipeapp.home.viewmodel.HomeViewModelFactory
 import com.example.recipeapp.network.APIClient
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 
 
 class SignupFragment : Fragment() {
     private lateinit var _binding: FragmentSignupBinding
     private lateinit var signUpViewModel: SignupViewModel
+    private val auth = FirebaseAuth.getInstance()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (auth.currentUser != null) {
+            val action= SignupFragmentDirections.actionSignupFragmentToHomeFragment3()
+           findNavController().navigate(action)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +64,7 @@ class SignupFragment : Fragment() {
         }
         signUpViewModel.userAdded.observe(requireActivity()){
             if(it==true){
-                val action= SignupFragmentDirections.actionSignupFragmentToLoginFragment()
+                val action= SignupFragmentDirections.actionSignupFragmentToHomeFragment3()
                 Toast.makeText(requireContext(), " Your account has been successfully created!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(action)
             }
@@ -66,46 +76,47 @@ class SignupFragment : Fragment() {
 
         }
         _binding.tvSignin.setOnClickListener {
-            val action = SignupFragmentDirections.actionSignupFragmentToLoginFragment()
+           val  action = SignupFragmentDirections.actionSignupFragmentToLoginFragment3()
             findNavController().navigate(action)
         }
     }
-
-    private fun checkAllFields(emailEt : TextInputLayout, passwordEt: TextInputLayout, reEnterPasswordEt: TextInputLayout): Boolean{
+    private fun checkAllFields(emailEt: TextInputLayout, passwordEt: TextInputLayout, reEnterPasswordEt: TextInputLayout): Boolean {
         val email = emailEt.editText?.text.toString()
-        if(email==""){
+
+        if (email.isBlank()) {
             emailEt.error = "This field is required"
             return false
-        }else{
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEt.error = "Invalid email format"
+            return false
+        } else {
             emailEt.error = null
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            emailEt.error = "Check email fromat"
+
+        val password = passwordEt.editText?.text.toString()
+        if (password.isBlank()) {
+            passwordEt.error = "This field is required"
             return false
+        } else if (password.length < 8) {
+            passwordEt.error = "Password should be at least 8 characters"
+            return false
+        } else {
+            passwordEt.error = null
         }
 
-        if(passwordEt.editText?.text.toString() ==""){
-            emailEt.error = "This field is required"
-            return false
-        }else{
-            emailEt.error= null
-        }
-        if(passwordEt.editText?.text?.length!!<8){
-            passwordEt.error = "password should be 8 characters at least "
-            return false
-        }else{
-            passwordEt.error= null
-        }
-        if(reEnterPasswordEt.editText?.text.toString()==""){
+        val reEnterPassword = reEnterPasswordEt.editText?.text.toString()
+        if (reEnterPassword.isBlank()) {
             reEnterPasswordEt.error = "This field is required"
             return false
-        }else if(reEnterPasswordEt.editText?.text.toString()!=passwordEt.editText?.text.toString()){
-            reEnterPasswordEt.error = "Password doesn't match"
-        }else{
-            reEnterPasswordEt.error=null
+        } else if (reEnterPassword != password) {
+            reEnterPasswordEt.error = "Passwords do not match"
+            return false
+        } else {
+            reEnterPasswordEt.error = null
         }
         return true
     }
+
     private fun gettingViewModelReady(context: Context) {
 
         val signupViewModelFactory = SignupViewModelFactory(

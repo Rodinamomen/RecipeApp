@@ -62,8 +62,6 @@ class HomeFragment : Fragment() {
                 }
             })
         }
-
-
     }
     private fun gettingViewModelReady(context: Context) {
         val homeViewModelFactory = HomeViewModelFactory(

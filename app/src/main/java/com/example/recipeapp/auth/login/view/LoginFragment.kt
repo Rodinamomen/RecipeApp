@@ -10,17 +10,28 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.auth.login.viewmodel.LoginViewModel
+import com.example.recipeapp.auth.signup.view.SignupFragmentDirections
 import com.example.recipeapp.databinding.FragmentLoginBinding
 import com.example.recipeapp.databinding.FragmentSignupBinding
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginFragment : Fragment() {
     private lateinit var _binding: FragmentLoginBinding
+    private  var auth =FirebaseAuth.getInstance()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (auth.currentUser != null) {
+            val action= LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+            findNavController().navigate(action)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding= FragmentLoginBinding.inflate(inflater,container,false)
         val view = _binding.root
         return view

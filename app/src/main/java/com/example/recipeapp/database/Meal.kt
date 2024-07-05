@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey
 @Entity
 data class Meal(
     @PrimaryKey(autoGenerate = false)
-    val idMeal: String,
-    val strMeal: String,
-    val strMealThumb: String,
-    val strInstructions:String
+    val idMeal: String="",
+    val strMeal: String="",
+    val strMealThumb: String="",
+    val strInstructions:String=""
 ):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),

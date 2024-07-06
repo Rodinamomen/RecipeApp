@@ -18,7 +18,7 @@
         <img src="https://github.com/Rodinamomen/RecipeApp/assets/96385247/bbfa3a3a-2123-4221-91e3-1eeb23239064" alt="Splash Screen" style="width: 200px; margin-right: 20px;">
     </div>
     <div style="flex: 2;">
-        <p>- Implemented using the Splash Screen API with the resized logo to the appropriate dimensions. Here's your descriptive text that should appear next to the image.</p>
+        <p>- Implemented using the Splash Screen API with the resized logo to the appropriate dimensions.</p>
     </div>
 </div>
 <h1>Signup</h1>
